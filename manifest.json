@@ -1,0 +1,136 @@
+{
+  "$schema": "./schema/piphi-manifest.schema.json",
+  "manifest_version": "1.0",
+  "id": "piphi-modbus-rtu-sidecar",
+  "name": "Piphi Modbus Rtu Sidecar",
+  "version": "0.1.0",
+  "description": "Managed Modbus RTU serial transport sidecar for PiPhi integrations, with bus arbitration and bounded request delivery.",
+  "metadata": {
+    "generator": "piphi-network-create",
+    "scaffold_version": "0.3.0",
+    "preset": "sidecar-worker",
+    "domain": "sidecar-service",
+    "preset_summary": "Sidecar starter with service health and queue-oriented command hooks."
+  },
+  "maintainer": {
+    "name": "PiPhi Network",
+    "website": "https://piphi.io"
+  },
+  "license": "Apache-2.0",
+  "image": "docker.io/piphinetwork/piphi-modbus-rtu-sidecar:0.1.0",
+  "platforms": [
+    "linux"
+  ],
+  "runtime": {
+    "linux": {
+      "type": "container",
+      "container": {
+        "image": "docker.io/piphinetwork/piphi-modbus-rtu-sidecar:0.1.0",
+        "ports": [
+          {
+            "container": 4212,
+            "host": 4212
+          }
+        ],
+        "environment": {
+          "LOG_LEVEL": "info"
+        },
+        "restart_policy": {
+          "name": "unless-stopped",
+          "maximum_retry_count": 0
+        }
+      },
+      "discovery": {
+        "method": "passive"
+      }
+    }
+  },
+  "api": {
+    "required": [
+      "health",
+      "entities",
+      "command",
+      "config",
+      "ui_config"
+    ],
+    "endpoints": {
+      "health": "/health",
+      "diagnostics": "/diagnostics",
+      "discover": "/discover",
+      "entities": "/entities",
+      "state": "/state",
+      "config": "/config",
+      "config_sync": "/config/sync",
+      "deconfigure": "/deconfigure",
+      "ui_config": "/ui-config",
+      "events": "/events",
+      "command": "/command"
+    }
+  },
+  "config": {
+    "source": "endpoint",
+    "endpoint": "/ui-config",
+    "required": true,
+    "editable_fields": [
+      "host",
+      "alias",
+      "service_name"
+    ],
+    "runtime_fields": [
+      "id",
+      "config_id",
+      "container_id",
+      "device_id"
+    ],
+    "identity_fields": [
+      "host"
+    ]
+  },
+  "identity": {
+    "fields": [
+      "host"
+    ]
+  },
+  "capabilities": {
+    "connected": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "refresh": {
+      "kind": "action"
+    }
+  },
+  "commands": {
+    "refresh": {
+      "description": "Refresh the device state.",
+      "timeout_ms": 5000
+    }
+  },
+  "entities": [
+    {
+      "id": "modbus-rtu-service",
+      "name": "Modbus RTU Service",
+      "device_id": "modbus-rtu-service",
+      "entity_type": "service",
+      "capabilities": [
+        "connected",
+        "refresh"
+      ],
+      "available_commands": [
+        {
+          "id": "refresh",
+          "label": "Refresh",
+          "kind": "action"
+        }
+      ],
+      "dashboard": {
+        "allowed_widgets": [
+          "tile",
+          "stat",
+          "button"
+        ],
+        "default_widget": "tile"
+      }
+    }
+  ]
+}

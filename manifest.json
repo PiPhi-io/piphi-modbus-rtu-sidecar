@@ -2,9 +2,9 @@
   "$schema": "./schema/piphi-manifest.schema.json",
   "manifest_version": "1.0",
   "id": "piphi-modbus-rtu-sidecar",
-  "name": "Piphi Modbus Rtu Sidecar",
+  "name": "Modbus RTU sidecar",
   "version": "0.1.0",
-  "description": "Managed Modbus RTU serial transport sidecar for PiPhi integrations, with bus arbitration and bounded request delivery.",
+  "description": "Coordinate bounded Modbus RTU and ASCII requests over serial buses.",
   "metadata": {
     "generator": "piphi-network-create",
     "scaffold_version": "0.3.0",
@@ -132,5 +132,70 @@
         "default_widget": "tile"
       }
     }
-  ]
+  ],
+  "marketplace": {
+    "metadata_version": 2,
+    "display_name": "Modbus RTU sidecar",
+    "summary": "Coordinate bounded Modbus RTU and ASCII requests over serial buses.",
+    "category": "networking",
+    "regions": [
+      "WW"
+    ],
+    "languages": [
+      "en"
+    ],
+    "publisher": {
+      "name": "PiPhi Network",
+      "website_url": "https://piphi.io",
+      "support_url": "https://github.com/PiPhi-io/piphi-modbus-rtu-sidecar/issues",
+      "security_contact": "support@piphi.io"
+    },
+    "access": [
+      {
+        "id": "device_access",
+        "label": "Serial device access",
+        "reason": "Uses the explicitly configured host device to communicate with supported hardware.",
+        "required": true
+      },
+      {
+        "id": "sidecar_runtime",
+        "label": "Managed sidecar runtime",
+        "reason": "Runs as an isolated helper service consumed by a parent PiPhi integration.",
+        "required": true
+      }
+    ],
+    "compatibility": [
+      {
+        "brand": "Multi-vendor",
+        "model": "Modbus RTU and ASCII devices described by parent profiles"
+      }
+    ],
+    "documentation_url": "https://github.com/PiPhi-io/piphi-modbus-rtu-sidecar",
+    "support_url": "https://github.com/PiPhi-io/piphi-modbus-rtu-sidecar/issues",
+    "changelog_url": "https://github.com/PiPhi-io/piphi-modbus-rtu-sidecar/releases",
+    "quality_tier": "unrated",
+    "governance": {
+      "schema_version": 1,
+      "publication_status": "draft",
+      "rollout_percent": 0,
+      "lifecycle_status": "active",
+      "qualification": {
+        "status": "unverified"
+      }
+    },
+    "device_types": [
+      "Serial protocol gateway"
+    ],
+    "protocols": [
+      "Modbus RTU",
+      "Modbus ASCII",
+      "Serial"
+    ],
+    "discovery_methods": [
+      "manual",
+      "serial port enumeration"
+    ],
+    "connectivity": "local",
+    "offline_support": "full"
+  }
 }

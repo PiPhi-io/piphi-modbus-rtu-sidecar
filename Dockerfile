@@ -4,4 +4,4 @@ COPY pyproject.toml ./
 COPY src ./src
 RUN pip install --no-cache-dir .
 EXPOSE 4212
-CMD ["uvicorn", "piphi_modbus_rtu_sidecar.main:app", "--host", "0.0.0.0", "--port", "4212"]
+CMD ["python", "-m", "piphi_modbus_rtu_sidecar.main"]
